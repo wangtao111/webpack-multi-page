@@ -6,14 +6,13 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin'); //生成html模板；
 var CommonsChunkPlugin = new webpack.optimize.CommonsChunkPlugin('common');//把公共模块提取出来, 并取名为'common'(名字自起), webpack之后再out文件夹下生成common.js, 测试时记得引入提取出来的公共模块js文件
 var ExtractTextPlugin = require("extract-text-webpack-plugin");//将css独立引入变成link标签形式, 使用该插件需要独立下载'npm install extract-text-webpack-plugin --save-dev', 同时下面的rules也必须更改
-
 module.exports = {
     entry : {index: './src/js/entry.js', index2: './src/js/entry2.js'},//入口文件 index， index2
     output : {//输出文件
         filename : 'js/[name].js',//输出文件名
-        publicPath: '/out/',//添加静态资源, 否则会出现路径错误
+        // publicPath: '',//添加静态资源, 否则会出现路径错误
         chunkFilename: 'js/[name].js',//CommonsChunkPlugin提取的公共文件
-        path : __dirname + '/out'//输出文件路径
+        path : __dirname//输出文件路径
     },
     module : {
         rules: [
@@ -34,9 +33,9 @@ module.exports = {
     },
     devServer: {   // web-dev-server 的配置
         historyApiFallback: true, //防止单页面应用访问路径出错
-        port: 8000,
+        port: 8088,
         open: 'http://localhost:8000',
-        openPage: 'out/index.html',// 打开指定文件
+        openPage: 'index.html',// 打开指定文件
         noInfo: true
     },
     devtool: '#eval-source-map',

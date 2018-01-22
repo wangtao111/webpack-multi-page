@@ -1,1 +1,0 @@
-webpackJsonp([0],[function(module,exports,__webpack_require__){console.log("123"),__webpack_require__(1);var oImg=new Image;oImg.src=__webpack_require__(2),document.body.appendChild(oImg)},function(module,exports){},function(module,exports,__webpack_require__){module.exports=__webpack_require__.p+"img/ss.508b8641.jpg"}],[0]);

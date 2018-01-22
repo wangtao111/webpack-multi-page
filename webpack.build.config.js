@@ -7,13 +7,15 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CommonsChunkPlugin = new webpack.optimize.CommonsChunkPlugin('common');//把公共模块提取出来, 并取名为'common'(名字自起), webpack之后再out文件夹下生成common.js, 测试时记得引入提取出来的公共模块js文件
 var ExtractTextPlugin = require("extract-text-webpack-plugin");//将css独立引入变成link标签形式, 同时下面的rules也必须更改
 var CleanWebpackPlugin = require('clean-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+
 module.exports = {
     entry : {index: './src/js/entry.js', index2: './src/js/entry2.js'},//入口文件 index， index2
     output : {//输出文件
         filename : 'js/[name].[chunkhash].js',//输出文件名
-        publicPath: '/out/',//添加静态资源, 否则会出现路径错误
+        publicPath: '',//添加静态资源, 否则会出现路径错误
         chunkFilename: 'js/[name].[chunkhash].js',//CommonsChunkPlugin提取的公共文件
-        path : __dirname + '/out'//输出文件路径
+        path : __dirname + '/package'//输出文件路径
     },
     module : {
         rules: [
@@ -43,20 +45,24 @@ module.exports = {
     plugins: [
         CommonsChunkPlugin,
         new webpack.optimize.OccurrenceOrderPlugin(), //调整js顺序，引用多的靠前
-        new webpack.optimize.DedupePlugin(), //去重
-        new CleanWebpackPlugin(['out'], { // 清除上一次的打包文件，避免垃圾文件
+        // new webpack.optimize.DedupePlugin(), //去重
+        new CleanWebpackPlugin(['package'], { // 清除上一次的打包文件，避免垃圾文件
             // "root":"[webpack.config的地址]",//一个根的绝对路径.
             // "verbose": true,//将log写到 console.
             // "dry": false,//不要删除任何东西，主要用于测试.
             // "exclude": ["files","to","ignore"]//排除不删除的目录，主要用于避免删除公用的文件
         }),
+        new CopyWebpackPlugin([{
+            from: __dirname + '/js',
+            to: __dirname + '/package/js'
+        }]),
         new webpack.DefinePlugin({ //设置项目中的全局变量，类似于环境变量
             'process.env': {
                 NODE_ENV: JSON.stringify('production')
             }
         }),
         new ExtractTextPlugin('css/[name].[contenthash].css'),
-        new webpack.optimize.UglifyJsPlugin({
+        new webpack.optimize.UglifyJsPlugin({//压缩js代码
             minimize: true,
             mangle: false,
             output: {
@@ -65,7 +71,7 @@ module.exports = {
             compress: {
                 warnings: false
             }
-        }), //压缩js代码
+        }),
         // new webpack.optimize.CommonsChunkPlugin({
         //   names: ['vendor', 'manifest']
         // }),
