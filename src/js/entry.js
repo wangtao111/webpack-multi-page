@@ -8,6 +8,7 @@ var oImg = new Image();
 oImg.src = require('../img/ss.jpg');//当成模块引入图片
 // document.body.appendChild(oImg);
 var mygrid = new dhtmlXGridObject("grid");
+var switchBtn = true;
 mygrid.setImagesPath("../dhtmlx/codebase/imgs/");
 mygrid.setHeader(
     "序号,备注",
@@ -49,5 +50,16 @@ window.onload = function () {
         html += '<li draggable="true" ondragstart="drag(event)"><span>'+data[i].num+'</span><span>'+data[i].name+'</span></li>'
     }
     $('#left_list').html(html);
+    $('#app').click(function () {
+        if(switchBtn){
+            $('.el-switch__core').css({borderColor: '#dcdfe6', backgroundColor: '#dcdfe6'});
+            $('.el-switch__button').removeClass('move');
+            switchBtn = false;
+        }else{
+            $('.el-switch__core').css({borderColor: '#409eff', backgroundColor: '#409eff'});
+            $('.el-switch__button').addClass('move');
+            switchBtn = true;
+        }
+    })
 }
 
