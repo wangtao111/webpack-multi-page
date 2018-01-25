@@ -32,7 +32,7 @@ module.exports = {
         ]
     },
     devServer: {   // web-dev-server 的配置
-        historyApiFallback: true, //防止单页面应用访问路径出错
+        historyApiFallback: true, //防止单页面应用访问路径出错,单页面应用使用hash路径，如果不设置会请求本地资源导致页面走失
         port: 8088,
         open: 'http://localhost:8000',
         openPage: 'index.html',// 打开指定文件

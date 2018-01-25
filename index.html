@@ -10,9 +10,26 @@
 <script src="js/jquery.blockUI-2.70.js"></script>
 <script src="js/dhtmlx.js"></script>
 <script src="js/dhtmlx_deprecated.js"></script>
-阿斯大
-<a href="./index2.html">11</a>
+<a href="./index2.html">页面二</a>
+<ul id="left_list" class="list_style" ondrop="drop(event)" ondragover="allowDrop(event)">
+</ul>
+<ul id="right_list" class="list_style" ondrop="drop(event)" ondragover="allowDrop(event)">
+</ul>
 <div class="demo1" id="grid" style="width: 500px;height:500px"></div>
-<div class="demo2"></div>
+<div id="app"></div>
+<script>
+    function allowDrop(ev){
+        ev.preventDefault();
+    }
+    function drag(ev){
+        dom = ev.currentTarget
+    }
+    function drop(ev){
+        ev.preventDefault();
+        if(ev.target.id == 'left_list' || ev.target.id == 'right_list'){
+            ev.target.appendChild(dom);
+        }
+    }
+</script>
 </body>
 </html>
